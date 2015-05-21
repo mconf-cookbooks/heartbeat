@@ -46,6 +46,7 @@ attribute :interface, :kind_of => [String, Array], :default => node['network']['
 attribute :mcast_group, :kind_of => String
 attribute :mcast_ttl, :kind_of => Integer, :default => 1
 attribute :resource_groups, :default => []
+attribute :nodes, :kind_of => Array, :default => []
 
 def resources(ip=nil, &block)
   group = ::Chef::Resource::HeartbeatResourceGroup.new(run_context, cookbook_name, recipe_name)

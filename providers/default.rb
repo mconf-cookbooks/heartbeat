@@ -19,8 +19,12 @@
 
 action :create do
   query = new_resource.search || "recipes:#{new_resource.cookbook_name}\\:\\:#{new_resource.recipe_name}"
-  nodes = search(:node, query)
-  nodes << node if nodes.select{|n| n['macaddress'] == node['macaddress']}.empty?
+  nodes = if new_resource.nodes.empty?
+    search(:node, query)
+    nodes << node if nodes.select{|n| n['macaddress'] == node['macaddress']}.empty?
+  else
+    new_resource.nodes
+  end
   interface = new_resource.interface.is_a?(Array) ? new_resource.interface : [new_resource.interface]
   authkeys = new_resource.authkeys.is_a?(Array) ? new_resource.authkeys : [new_resource.authkeys]
 
